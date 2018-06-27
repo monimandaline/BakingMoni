@@ -13,11 +13,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import hu.mandaline.bakingmoni.R;
 import hu.mandaline.bakingmoni.model.Recipe_model;
 
-//Adapter used to accomodate Recyclerview of Recipes
+// RecyclerView adapter to Recipes
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdapterViewHolder> {
 
@@ -51,10 +52,26 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
         if (imageUrl!="") {
             Picasso.with(context)
                     .load(recipe.getImage())
-                    .placeholder(context.getResources().getDrawable(R.drawable.dummycake1))
-                    .error(context.getResources().getDrawable(R.drawable.dummycake1))
+                    .placeholder(context.getResources().getDrawable(R.drawable.dummycake0))
+                    .error(context.getResources().getDrawable(R.drawable.dummycake0))
                     .into(holder.recipeImageView);
-        } else holder.recipeImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.dummycake1));
+
+        }
+        else
+            // images just for fun and test ui
+            switch(position) {
+                case 0: holder.recipeImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.dummycake1));
+                break;
+                case 1: holder.recipeImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.dummycake2));
+                break;
+                case 2: holder.recipeImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.dummycake3));
+                    break;
+                case 3: holder.recipeImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.dummycake4));
+                    break;
+                case 4: holder.recipeImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.dummycake5));
+                    break;
+                default:  holder.recipeImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.dummycake0));
+        }
 
         holder.recipeName.setText(recipe.getName());
     }

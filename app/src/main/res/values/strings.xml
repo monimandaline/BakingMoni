@@ -1,9 +1,10 @@
 <resources>
     <string name="content_authority">hu.mandaline.bakingapp</string>
 
+    <string name="app_name">Baking App</string>
 
-    <string name="app_name">BakingApp</string>
-    <string name="error_ocurred_on_loading_info">Ooops something happened.\n Press here to try again.</string>
+    <string name="no_internet_connection">Please, check your internet connection!</string>
+
     <string name="servings_list_item_label">Servings:</string>
     <string name="default_content_description">Element</string>
     <string name="ingredients_title">Ingredients</string>
