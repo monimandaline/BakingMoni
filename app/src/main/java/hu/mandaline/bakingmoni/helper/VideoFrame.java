@@ -15,9 +15,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public abstract class utils {
+public abstract class VideoFrame {
 
-    private static final String TAG = "Utils";
+    private static final String TAG = "VideoFrame";
 
     //suggested by uda reviewer (TODO kell ez?)
     private static Bitmap retriveVideoFrameFromVideo(String videoPath) throws Throwable {

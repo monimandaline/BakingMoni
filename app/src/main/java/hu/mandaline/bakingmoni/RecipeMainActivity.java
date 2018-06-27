@@ -3,7 +3,6 @@ package hu.mandaline.bakingmoni;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
@@ -24,9 +23,7 @@ import java.util.ArrayList;
 import hu.mandaline.bakingmoni.adapter.RecipeAdapter;
 import hu.mandaline.bakingmoni.helper.RecipeData;
 import hu.mandaline.bakingmoni.model.Recipe_model;
-import hu.mandaline.bakingmoni.helper.utils;
 
-import hu.mandaline.bakingmoni.R;
 import hu.mandaline.bakingmoni.utils.ApiConnection;
 import hu.mandaline.bakingmoni.utils.RecipeParsing;
 import hu.mandaline.bakingmoni.utils.ScreenColumnCalculator;
