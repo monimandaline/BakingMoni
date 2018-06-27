@@ -1,0 +1,32 @@
+<resources>
+    <string name="content_authority">hu.mandaline.bakingapp</string>
+
+
+    <string name="app_name">BakingApp</string>
+    <string name="error_ocurred_on_loading_info">Ooops something happened.\n Press here to try again.</string>
+    <string name="servings_list_item_label">Servings:</string>
+    <string name="default_content_description">Element</string>
+    <string name="ingredients_title">Ingredients</string>
+    <string name="steps_title">Steps</string>
+    <string name="next_recipe_step">Next Step &gt;</string>
+    <string name="previous_recipe_step">&lt; Previous Step</string>
+    <string name="no_media_available">No Media Available</string>
+
+    <string name="recipe_detail_activity_action_bar_title">Recipe Detail</string>
+    <string name="recipe_detail_step_activity_action_bar_title">Step Detail</string>
+
+
+    <!-- Widget -->
+    <string name="widget_no_selected_recipe">No selected recipe. Press here to select a recipe.</string>
+    <string name="widget_no_selected_recipe_title">No Recipe selected</string>
+
+    <!-- Exo Player Content Description -->
+    <string name="player_previous">Previous</string>
+    <string name="player_rewind">Rewind</string>
+    <string name="player_play">Play</string>
+    <string name="player_pause">Pause</string>
+    <string name="player_fastforward">Fast Forward</string>
+    <string name="player_next">Next</string>
+
+
+</resources>
