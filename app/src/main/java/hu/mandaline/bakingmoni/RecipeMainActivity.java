@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -100,8 +101,15 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeAdapt
     @Override
     public void onItemClick(int position, Recipe_model recipe, ImageView imageView) {
         Intent intent = new Intent(RecipeMainActivity.this, RecipeDetailsActivity.class);
-        RecipeData.recipe = recipe;
+        //RecipeData.recipe = recipe;
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("ingredients", recipe.getIngredients());
+        bundle.putParcelableArrayList("steps", recipe.getSteps());
+
+        intent.putExtras(bundle);
         startActivity(intent);
+
     }
 
     // Sets recipelist to adapter after loading from json is done

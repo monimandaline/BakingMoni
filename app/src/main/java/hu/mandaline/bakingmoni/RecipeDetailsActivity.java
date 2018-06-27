@@ -12,14 +12,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import hu.mandaline.bakingmoni.R;
+import hu.mandaline.bakingmoni.fragments.IngredientsAndStepsFragment;
+import hu.mandaline.bakingmoni.fragments.SingleStepFragment;
 import hu.mandaline.bakingmoni.helper.RecipeData;
+import hu.mandaline.bakingmoni.model.Ingredient_model;
 import hu.mandaline.bakingmoni.model.Recipe_model;
 //import hu.mandaline.bakingmoni.widget.BakingAppWidgetProvider;
 import hu.mandaline.bakingmoni.helper.RecipeData;
 import hu.mandaline.bakingmoni.model.Recipe_model;
+import hu.mandaline.bakingmoni.model.Step_model;
 
-public class RecipeDetailsActivity extends AppCompatActivity {//implements IngredientsAndStepsFragment.OnStepListItemSelected {
+public class RecipeDetailsActivity extends AppCompatActivity implements IngredientsAndStepsFragment.OnStepListItemSelected {
 
     private boolean mTwoPane;
     private Recipe_model chosenRecipe;
@@ -29,6 +35,52 @@ public class RecipeDetailsActivity extends AppCompatActivity {//implements Ingre
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
+
+        Intent intent = getIntent();
+        Bundle intentBundle = intent.getExtras();
+
+        // detail data
+        ArrayList<Ingredient_model> Ingredients = intentBundle.getParcelableArrayList("ingredients");
+        ArrayList<Step_model> Steps = intentBundle.getParcelableArrayList("steps");
+        String Name = intentBundle.getString("name");
+
+        // detail data fom fragment
+        bundle.putParcelableArrayList("IngredientsForFragment",Ingredients);
+        bundle.putParcelableArrayList("StepsForFragment",Steps);
+
+        // tablet
+        if (findViewById((R.id.two_pane_layout)) != null) {
+            mTwoPane = true;
+
+            if (savedInstanceState == null) {
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                SingleStepFragment singleStepFragment = new SingleStepFragment();
+                singleStepFragment.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.single_step_fragment, singleStepFragment)
+                        .commit();
+
+                IngredientsAndStepsFragment ingredientsAndStepsFragment = new IngredientsAndStepsFragment();
+                ingredientsAndStepsFragment.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.ingredients_and_steps_layout, ingredientsAndStepsFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+            // mobil
+        } else {
+            mTwoPane = false;
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            IngredientsAndStepsFragment ingredientsAndStepsFragment = new IngredientsAndStepsFragment();
+            ingredientsAndStepsFragment.setArguments(bundle);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.ingredients_and_steps_layout, ingredientsAndStepsFragment)
+                    .commit();
+        }
+
+
 
         /*Toolbar toolbar = findViewById(R.id.recipe_toolbar);
 
@@ -91,35 +143,30 @@ public class RecipeDetailsActivity extends AppCompatActivity {//implements Ingre
             }
         });
 
-        if (findViewById((R.id.two_pane_layout)) != null) {
-            mTwoPane = true;
 
-            if (savedInstanceState == null) {
 
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                SingleStepFragment singleStepFragment = new SingleStepFragment();
-                singleStepFragment.setArguments(bundle);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.single_step_fragment, singleStepFragment)
-                        .commit();
 
-                IngredientsAndStepsFragment ingredientsAndStepsFragment = new IngredientsAndStepsFragment();
-                ingredientsAndStepsFragment.setArguments(bundle);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.ingredients_and_steps_fragment, ingredientsAndStepsFragment)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        } else {
-            mTwoPane = false;
-
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            IngredientsAndStepsFragment ingredientsAndStepsFragment = new IngredientsAndStepsFragment();
-            ingredientsAndStepsFragment.setArguments(bundle);
-            fragmentManager.beginTransaction()
-                    .replace(R.id.ingredients_and_steps_fragment, ingredientsAndStepsFragment)
-                    .commit();
+    @Override
+    public void onBackPressed() {
+        RecipeData.stepIndex = 0;
+        if (mTwoPane) {
+            finish();
+            super.onBackPressed();
+        } else if (findViewById(R.id.frame_single_step) != null) {
+            getSupportFragmentManager().popBackStack();
+        } else if (findViewById(R.id.frame_ingredients_and_steps) != null) {
+            finish();
+            Intent intent = new Intent(this, RecipesActivity.class);
+            RecipeData.recipe = null;
+            startActivity(intent);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle currentState) {
+        super.onSaveInstanceState(currentState);
+        currentState.putBoolean("PANE", mTwoPane);
+        currentState.putParcelable("RECIPE", chosenRecipe);*/
     }
 
     // Define the behavior for onStepListItemSelected
@@ -149,26 +196,4 @@ public class RecipeDetailsActivity extends AppCompatActivity {//implements Ingre
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        RecipeData.stepIndex = 0;
-        if (mTwoPane) {
-            finish();
-            super.onBackPressed();
-        } else if (findViewById(R.id.frame_single_step) != null) {
-            getSupportFragmentManager().popBackStack();
-        } else if (findViewById(R.id.frame_ingredients_and_steps) != null) {
-            finish();
-            Intent intent = new Intent(this, RecipesActivity.class);
-            RecipeData.recipe = null;
-            startActivity(intent);
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle currentState) {
-        super.onSaveInstanceState(currentState);
-        currentState.putBoolean("PANE", mTwoPane);
-        currentState.putParcelable("RECIPE", chosenRecipe);*/
-    }
 }
