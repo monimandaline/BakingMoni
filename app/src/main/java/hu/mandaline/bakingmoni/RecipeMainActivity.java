@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import hu.mandaline.bakingmoni.adapter.RecipeAdapter;
 import hu.mandaline.bakingmoni.helper.RecipeData;
+import hu.mandaline.bakingmoni.model.Ingredient_model;
 import hu.mandaline.bakingmoni.model.Recipe_model;
 
 import hu.mandaline.bakingmoni.utils.ApiConnection;
@@ -100,15 +101,31 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeAdapt
 
     @Override
     public void onItemClick(int position, Recipe_model recipe, ImageView imageView) {
+
         Intent intent = new Intent(RecipeMainActivity.this, RecipeDetailsActivity.class);
+
+        intent.putParcelableArrayListExtra("ingredients", (ArrayList) recipe.getIngredients());
+        intent.putParcelableArrayListExtra("steps", (ArrayList) recipe.getSteps());
+
         //RecipeData.recipe = recipe;
 
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("ingredients", recipe.getIngredients());
-        bundle.putParcelableArrayList("steps", recipe.getSteps());
+        //Bundle bundle = new Bundle();
 
-        intent.putExtras(bundle);
+
+        /*bundle.putParcelableArrayList("ingredients", recipe.getIngredients());
+        bundle.putParcelableArrayList("steps", recipe.getSteps());*/
+
+        intent.putExtra("name", recipe.getName());
+
+        //intent.putExtras(bundle);
         startActivity(intent);
+
+      /*  startActivity(new Intent(this, RecipeDetailsActivity.class)
+                .putParcelableArrayListExtra("ingredients", recipe.getIngredients())
+                .putParcelableArrayListExtra("steps", recipe.getSteps())
+                .putExtra ("name", recipe.getName())
+        );*/
+
 
     }
 

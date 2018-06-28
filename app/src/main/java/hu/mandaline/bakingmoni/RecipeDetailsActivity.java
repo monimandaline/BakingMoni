@@ -36,15 +36,29 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Ingredie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
 
-        Intent intent = getIntent();
-        Bundle intentBundle = intent.getExtras();
+        //Intent intent = getIntent();
+
+
+        // Bundle intentBundle = getIntent().getExtras();
 
         // detail data
-        ArrayList<Ingredient_model> Ingredients = intentBundle.getParcelableArrayList("ingredients");
-        ArrayList<Step_model> Steps = intentBundle.getParcelableArrayList("steps");
-        String Name = intentBundle.getString("name");
+        //ArrayList<Ingredient_model> Ingredients = intentBundle.getParcelableArrayList("ingredients");
 
-        // detail data fom fragment
+        ArrayList<Ingredient_model> Ingredients = new ArrayList<Ingredient_model>();
+
+        Ingredients = getIntent().getParcelableArrayListExtra("ingredients");
+
+        //ArrayList<Step_model> Steps = intentBundle.getParcelableArrayList("steps");
+
+        ArrayList<Step_model> Steps = new ArrayList<Step_model>();
+
+        Steps = getIntent().getParcelableArrayListExtra("steps");
+
+        //String Name = intentBundle.getString("name");
+
+        String name = getIntent().getExtras().getString("name");
+
+        // detail data for fragment
         bundle.putParcelableArrayList("IngredientsForFragment",Ingredients);
         bundle.putParcelableArrayList("StepsForFragment",Steps);
 
