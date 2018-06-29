@@ -78,9 +78,9 @@ public class IngredientsAndStepsFragment extends Fragment {
 
         } else {
             if (getArguments() != null) {
-                ingredientList = getArguments().getParcelableArrayList("INGREDIENTS");
-                stepList = getArguments().getParcelableArrayList("STEPS");
-                recipeName = getArguments().getString("RECIPE_NAME");
+                ingredientList = getArguments().getParcelableArrayList("IngredientsForFragment");
+                stepList = getArguments().getParcelableArrayList("StepsForFragment");
+                recipeName = getArguments().getString("CakeName");
             }
         }
 

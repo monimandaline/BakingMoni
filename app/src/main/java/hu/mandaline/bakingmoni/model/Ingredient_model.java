@@ -56,9 +56,9 @@ public class Ingredient_model implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeValue(quantity);
-        parcel.writeValue(measure);
-        parcel.writeValue(ingredient);
+        parcel.writeDouble(quantity);
+        parcel.writeString(measure);
+        parcel.writeString(ingredient);
     }
 
     /**

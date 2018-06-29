@@ -44,6 +44,9 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeAdapt
     private TextView emptyStateTextView;
     private GridLayoutManager layoutManager;
 
+    static final String DETAILS = "details";
+    public Recipe_model RecipeDetails;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,29 +107,17 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeAdapt
 
         Intent intent = new Intent(RecipeMainActivity.this, RecipeDetailsActivity.class);
 
-        intent.putParcelableArrayListExtra("ingredients", (ArrayList) recipe.getIngredients());
-        intent.putParcelableArrayListExtra("steps", (ArrayList) recipe.getSteps());
+       //// intent.putExtra("DETAILS", recipe);
 
-        //RecipeData.recipe = recipe;
+        intent.putParcelableArrayListExtra("ingredients", (ArrayList<? extends Parcelable>) recipe.getIngredients());
+        intent.putParcelableArrayListExtra("steps", (ArrayList <? extends Parcelable>) recipe.getSteps());
 
-        //Bundle bundle = new Bundle();
+        intent.putExtra("recipe", recipe);
 
-
-        /*bundle.putParcelableArrayList("ingredients", recipe.getIngredients());
-        bundle.putParcelableArrayList("steps", recipe.getSteps());*/
+        //L: RecipeData.recipe = recipe;
 
         intent.putExtra("name", recipe.getName());
-
-        //intent.putExtras(bundle);
         startActivity(intent);
-
-      /*  startActivity(new Intent(this, RecipeDetailsActivity.class)
-                .putParcelableArrayListExtra("ingredients", recipe.getIngredients())
-                .putParcelableArrayListExtra("steps", recipe.getSteps())
-                .putExtra ("name", recipe.getName())
-        );*/
-
-
     }
 
     // Sets recipelist to adapter after loading from json is done

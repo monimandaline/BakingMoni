@@ -77,11 +77,11 @@ public class Step_model implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeValue(id);
-        parcel.writeValue(shortDescription);
-        parcel.writeValue(description);
-        parcel.writeValue(videoURL);
-        parcel.writeValue(thumbnailURL);
+        parcel.writeInt(id);
+        parcel.writeString(shortDescription);
+        parcel.writeString(description);
+        parcel.writeString(videoURL);
+        parcel.writeString(thumbnailURL);
     }
 
     /** Static field used to regenerate object, individually or as arrays */
