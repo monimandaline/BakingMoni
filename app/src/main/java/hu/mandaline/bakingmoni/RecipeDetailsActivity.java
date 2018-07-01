@@ -1,5 +1,6 @@
 package hu.mandaline.bakingmoni;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -24,14 +25,17 @@ import hu.mandaline.bakingmoni.model.Recipe_model;
 //import hu.mandaline.bakingmoni.helper.RecipeData;
 import hu.mandaline.bakingmoni.model.Recipe_model;
 import hu.mandaline.bakingmoni.model.Step_model;
+import hu.mandaline.bakingmoni.widget.BakingAppWidgetProvider;
 
 public class RecipeDetailsActivity extends AppCompatActivity implements IngredientsAndStepsFragment.OnStepListItemSelected
  {
 
     private boolean mTwoPane;
-    private Recipe_model chosenRecipe;
+   // private Recipe_model chosenRecipe;
     public Bundle bundle = new Bundle();
-    public Recipe_model RecipeDetails;
+    public ArrayList<Step_model> Steps = new ArrayList<Step_model>();
+    public ArrayList<Ingredient_model> Ingredients = new ArrayList<Ingredient_model>();
+    public String Name;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,32 +45,17 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Ingredie
         Intent intent = getIntent();
 
         // Unwrapping the Parcel, get detail datas
-        ArrayList<Ingredient_model> Ingredients = new ArrayList<Ingredient_model>();
         Ingredients = getIntent().getParcelableArrayListExtra("ingredients");
-
-        ArrayList<Step_model> Steps = new ArrayList<Step_model>();
         Steps = getIntent().getParcelableArrayListExtra("steps");
-
-
-        String name = getIntent().getExtras().getString("name");
+        Name = getIntent().getExtras().getString("name");
 
         // full datamodel
-        chosenRecipe = intent.getParcelableExtra("recipe");
+       // chosenRecipe = intent.getParcelableExtra("recipe");
 
         // detail data for fragment
         bundle.putParcelableArrayList("IngredientsForFragment", Ingredients);
         bundle.putParcelableArrayList("StepsForFragment", Steps);
-        bundle.putString("CakeName", name);
-
-/*
-        chosenRecipe = RecipeData.recipe;
-        if (chosenRecipe != null) {
-            bundle.putParcelableArrayList("INGREDIENTS", chosenRecipe.getIngredients());
-            bundle.putParcelableArrayList("STEPS", chosenRecipe.getSteps());
-            bundle.putString("RECIPE_NAME", chosenRecipe.getName());
-        }
-        */
-
+        bundle.putString("CakeName", Name);
 
         // tablet
         if (findViewById((R.id.two_pane_layout)) != null) {
@@ -103,39 +92,47 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Ingredie
 
         Toolbar toolbar = findViewById(R.id.recipe_toolbar);
 
-      /*  FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intentUpdate = new Intent(RecipeDetailsActivity.this, BakingAppWidgetProvider.class);
                 intentUpdate.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+
                 int[] ids = AppWidgetManager.getInstance(getApplication())
                         .getAppWidgetIds(new ComponentName(getApplication(), BakingAppWidgetProvider.class));
                 intentUpdate.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+
+                Intent intent = new Intent(RecipeDetailsActivity.this, BakingAppWidgetProvider.class);
+                intent.putExtra("WidgetName",Name);
+                intent.putParcelableArrayListExtra("WidgetIngredients", Ingredients);
+                PendingIntent pendingIntent = PendingIntent.getActivity(RecipeDetailsActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
                 sendBroadcast(intentUpdate);
                 Snackbar.make(view, "Ingredients added to widget!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
-*/
 
- /*       if (savedInstanceState != null) {
+
+        if (savedInstanceState != null) {
             mTwoPane = savedInstanceState.getBoolean("PANE");
-            chosenRecipe = savedInstanceState.getParcelable("RECIPE");
+            Ingredients = savedInstanceState.getParcelableArrayList("ingredients");
+            Steps = savedInstanceState.getParcelableArrayList("steps");
             setSupportActionBar(toolbar);
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setTitle(chosenRecipe.getName());
+                getSupportActionBar().setTitle(Name);
             }
             return;
         }
 
 
-*/
+
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(name);
+            getSupportActionBar().setTitle(Name);
         }
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -181,7 +178,8 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Ingredie
     public void onSaveInstanceState(Bundle currentState) {
         super.onSaveInstanceState(currentState);
         currentState.putBoolean("PANE", mTwoPane);
-        currentState.putParcelable("RECIPE", chosenRecipe);
+        currentState.putParcelableArrayList("steps", Steps);
+        currentState.putParcelableArrayList("ingredients", Ingredients);
     }
 
 
@@ -190,14 +188,12 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Ingredie
     public void onStepListItemSelected(int listIndex) {
         Toast.makeText(this, "Position clicked = " + listIndex, Toast.LENGTH_SHORT).show();
 
-        //RecipeData.stepIndex = listIndex;
-        //chosenRecipe
-        //chosenRecipe = RecipeData.recipe;
 
         if (mTwoPane) {
             SingleStepFragment newSingleStepFragment = new SingleStepFragment();
             newSingleStepFragment.setListIndex(listIndex);
-            bundle.putParcelableArrayList("StepsForFragment", chosenRecipe.getSteps());
+            bundle.putParcelableArrayList("StepsForFragment", Steps);
+            bundle.putInt("listIndex", listIndex);
             newSingleStepFragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.single_step_fragment, newSingleStepFragment)
@@ -205,7 +201,8 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Ingredie
         } else {
             SingleStepFragment newSingleStepFragment = new SingleStepFragment();
             newSingleStepFragment.setListIndex(listIndex);
-            bundle.putParcelableArrayList("StepsForFragment", chosenRecipe.getSteps());
+            bundle.putParcelableArrayList("StepsForFragment", Steps);
+            bundle.putInt("listIndex", listIndex);
             newSingleStepFragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.frame_ingredients_and_steps, newSingleStepFragment)

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import hu.mandaline.bakingmoni.R;
+import hu.mandaline.bakingmoni.adapter.IngredientsListAdapter;
 import hu.mandaline.bakingmoni.adapter.StepListAdapter;
 import hu.mandaline.bakingmoni.model.Ingredient_model;
 import hu.mandaline.bakingmoni.model.Step_model;
@@ -29,9 +30,9 @@ public class IngredientsAndStepsFragment extends Fragment {
     private ArrayList<Step_model> stepList;
     private OnStepListItemSelected mCallback;
     private TextView recipeNameView;
-    private TextView ingredientsView;
     private String recipeName;
     RecyclerView stepsView;
+    RecyclerView ingredientsView;
 
     // Mandatory empty constructor
     public IngredientsAndStepsFragment() {
@@ -68,8 +69,8 @@ public class IngredientsAndStepsFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_ingredients_and_steps, container, false);
 
         recipeNameView = (TextView) rootView.findViewById(R.id.tv_chosen_recipe_name);
-        ingredientsView = (TextView) rootView.findViewById(R.id.tv_ingredients);
         stepsView = (RecyclerView) rootView.findViewById(R.id.rv_step_descriptions);
+        ingredientsView = (RecyclerView) rootView.findViewById(R.id.rv_ingredients);
 
         if (savedInstanceState != null) {
             ingredientList = savedInstanceState.getParcelableArrayList("INGREDIENTS_SAVED");
@@ -84,19 +85,16 @@ public class IngredientsAndStepsFragment extends Fragment {
             }
         }
 
-        recipeNameView.setText(recipeName);
+        String ingredients_title = getResources().getString(R.string.ingredients_title);
+        recipeNameView.setText(recipeName + "\u0020" + ingredients_title);
 
-        for (int i = 0; i < ingredientList.size(); i++) {
-            Ingredient_model ingredient = (Ingredient_model) ingredientList.get(i);
-            ingredientsView.append(String.valueOf(ingredient.getQuantity()));
-            ingredientsView.append("\u0020 " + ingredient.getMeasure());
-            ingredientsView.append("\u0020 " + ingredient.getIngredient() + "\n");
-        }
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        stepsView.setLayoutManager(layoutManager);
+        RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
-        // Create the adapter
+        stepsView.setLayoutManager(layoutManager);
+        ingredientsView.setLayoutManager(layoutManager2);
+
         StepListAdapter stepAdapter = new StepListAdapter(stepList, new StepListAdapter.OnStepListItemClickListener() {
             @Override
             public void onStepListItemClick(Step_model item) {
@@ -105,8 +103,11 @@ public class IngredientsAndStepsFragment extends Fragment {
             }
         });
 
+        IngredientsListAdapter ingredientsAdapter = new IngredientsListAdapter(ingredientList);
+
         // Set the adapter on the view
         stepsView.setAdapter(stepAdapter);
+        ingredientsView.setAdapter(ingredientsAdapter);
 
         return rootView;
     }

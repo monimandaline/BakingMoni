@@ -1,8 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-
+    android:layout_height="36dp"
     xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.v7.widget.CardView
@@ -13,16 +12,33 @@
         android:layout_gravity="center"
         android:layout_margin="4dp"
         android:elevation="3dp"
-        card_view:cardCornerRadius="0dp">
+        card_view:cardCornerRadius="0dp"
+        >
+     <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/tv_step_short_description"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="4dp"
-                android:textSize="15sp"
-                tools:text="Do it"
-                android:background="@color/white_primary"/>
+                android:textSize="14sp"
+                tools:text="Do it, do it, do it"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white_primary"/>
+
+            <ImageView
+                android:id="@+id/iv_overflow"
+                style="@style/styleOpenItem"
+                android:layout_alignParentRight="true"
+                android:layout_alignEnd="@id/tv_step_short_description"
+                android:src="@drawable/ic_open_item"
+                android:contentDescription="item"/>
+
+        </RelativeLayout>
+
+
 
     </android.support.v7.widget.CardView>
 

@@ -29,17 +29,44 @@
                 android:adjustViewBounds="true"
                 android:src="@drawable/dummycake0"/>
 
-            <TextView
-                android:id="@+id/tv_recipe_name"
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="4dp"
-                android:textSize="15sp"
-                android:gravity="bottom|center"
-                android:background="@color/colorPrimary"
-                tools:text="Cake"/>
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_recipe_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:padding="4dp"
+                    android:textSize="15sp"
+                    android:gravity="center|center"
+                    tools:text="Cake"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/white_primary"/>
+
+                <ImageView
+                    android:id="@+id/iv_overflow"
+                    style="@style/styleOpenItem"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignEnd="@id/tv_recipe_name"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="8dp"
+                    android:gravity="center|center"
+                    android:src="@drawable/ic_open_item"
+                    android:contentDescription="item"/>
+
+            </RelativeLayout>
+
+
+
 
         </LinearLayout>
+
+
+
+
+
 
     </android.support.v7.widget.CardView>
 

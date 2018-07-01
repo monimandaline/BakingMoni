@@ -57,16 +57,9 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeAdapt
         recipeRecyclerView = findViewById(R.id.rv_recipes);
         progressBar = findViewById(R.id.progress_bar);
         emptyStateTextView = findViewById(R.id.tv_empty_state);
+
         progressBar = findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.VISIBLE);
-
-        /*//At portrait mode there will be 1 column in the grid, in landscape mode there will be 2.
-        int orientation = this.getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            spanCount = 1;
-        } else {
-            spanCount = 2;
-        }*/
 
         // Screen mode span settings
         int spanCount = 2;
@@ -107,15 +100,10 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeAdapt
 
         Intent intent = new Intent(RecipeMainActivity.this, RecipeDetailsActivity.class);
 
-       //// intent.putExtra("DETAILS", recipe);
-
         intent.putParcelableArrayListExtra("ingredients", (ArrayList<? extends Parcelable>) recipe.getIngredients());
         intent.putParcelableArrayListExtra("steps", (ArrayList <? extends Parcelable>) recipe.getSteps());
 
         intent.putExtra("recipe", recipe);
-
-        //L: RecipeData.recipe = recipe;
-
         intent.putExtra("name", recipe.getName());
         startActivity(intent);
     }
