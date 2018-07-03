@@ -4,9 +4,6 @@ package hu.mandaline.bakingmoni.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,19 +28,16 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import hu.mandaline.bakingmoni.R;
-import hu.mandaline.bakingmoni.helper.RecipeData;
 import hu.mandaline.bakingmoni.model.Step_model;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+// A simple {@link Fragment} subclass.
 public class SingleStepFragment extends Fragment {
 
-    private static final String TAG = "SingleStepFragment";
     private ArrayList<Step_model> steps;
     private Bundle args;
     private TextView stepDescription;
     private Step_model step = new Step_model();
+    private int listIndex;
     private SimpleExoPlayer mExoPlayer;
     private SimpleExoPlayerView exoPlayerView;
     private View rootView;
@@ -52,13 +46,8 @@ public class SingleStepFragment extends Fragment {
     boolean playWhenReady;
     long videoPosition = 0;
     int currentWindow = 0;
-    private int listIndex;
-  //  @Nullable
-   // private SimpleIdlingResource simpleIdlingResource;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the fragment
-     */
+
     public SingleStepFragment() {
     }
 
@@ -67,19 +56,16 @@ public class SingleStepFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_single_step, container, false);
-        stepDescription = rootView.findViewById(R.id.tv_step_description);
+        stepDescription = rootView.findViewById(R.id.tv_step);
         exoPlayerView = rootView.findViewById(R.id.exoplayer_view);
-        thumbnailView = rootView.findViewById(R.id.video_imageview);
+        thumbnailView = rootView.findViewById(R.id.iv_step);
 
-        //simpleIdlingResource = getSimpleIdlingResource();
-        //simpleIdlingResource.setIdleState(false);
-
-        // Load the saved state if there is one
+        // Load the saved state
         if (savedInstanceState != null) {
-            steps = savedInstanceState.getParcelableArrayList("STEPS");
-            videoPosition = savedInstanceState.getLong("VIDEO_POSITION");
-            playWhenReady = savedInstanceState.getBoolean("PLAY_WHEN_READY");
-            listIndex = savedInstanceState.getInt("LISTINDEX");
+            steps = savedInstanceState.getParcelableArrayList("SSteps");
+            videoPosition = savedInstanceState.getLong("SVideoPositon");
+            playWhenReady = savedInstanceState.getBoolean("SPlayWhenReady");
+            listIndex = savedInstanceState.getInt("SListIndex");
             updateStepView(listIndex);
 
         } else {
@@ -117,18 +103,9 @@ public class SingleStepFragment extends Fragment {
             videoUri = Uri.parse(step.getVideoURL());
            initializePlayer(videoUri);
         }
-        RecipeData.stepIndex = position;
     }
 
-    public void setListIndex(int index) {
-        RecipeData.stepIndex = index;
-    }
-
-    /**
-     * Initialize ExoPlayer.
-     *
-     * @param mediaUri The URI of the video to play.
-     */
+    // Initialize ExoPlayer.
     public void initializePlayer(Uri mediaUri) {
         if (mExoPlayer == null) {
             // Create an instance of the ExoPlayer.
@@ -144,20 +121,17 @@ public class SingleStepFragment extends Fragment {
             mExoPlayer.prepare(mediaSource);
             mExoPlayer.seekTo(currentWindow, videoPosition);
             mExoPlayer.setPlayWhenReady(playWhenReady);
-            //simpleIdlingResource.setIdleState(true);
+
         }
     }
 
-    /**
-     * Release ExoPlayer.
-     */
+    // Release ExoPlayer
     private void releasePlayer() {
         videoPosition = mExoPlayer.getCurrentPosition();
         playWhenReady = mExoPlayer.getPlayWhenReady();
         currentWindow = mExoPlayer.getCurrentWindowIndex();
         mExoPlayer.stop();
         mExoPlayer.release();
-        //mExoPlayer = null;
     }
 
     @Override
@@ -169,7 +143,6 @@ public class SingleStepFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-//        if (mExoPlayer != null) releasePlayer();
         mExoPlayer = null;
     }
 
@@ -178,32 +151,20 @@ public class SingleStepFragment extends Fragment {
         super.onResume();
         if (currentWindow == 0) {
             initializePlayer(videoUri);
-            //mExoPlayer.setPlayWhenReady(true);
         }
     }
 
-    /**
-     * Save the current state of this fragment
-     */
     @Override
     public void onSaveInstanceState(Bundle currentState) {
         super.onSaveInstanceState(currentState);
         if (mExoPlayer != null) {
-            currentState.putLong("VIDEO_POSITION", videoPosition);
-            currentState.putBoolean("PLAY_WHEN_READY", playWhenReady);
-            currentState.putParcelableArrayList("STEPS", steps);
+            currentState.putLong("SVideoPositon", videoPosition);
+            currentState.putBoolean("SPlayWhenReady", playWhenReady);
+            currentState.putParcelableArrayList("SSteps", steps);
             // current step
-            currentState.putInt("LISTINDEX", listIndex);
+            currentState.putInt("SListIndex", listIndex);
 
         }
     }
-/*
-    @VisibleForTesting
-    @NonNull
-    public SimpleIdlingResource getSimpleIdlingResource() {
-        if (simpleIdlingResource == null) {
-            simpleIdlingResource = new SimpleIdlingResource();
-        }
-        return simpleIdlingResource;
-    }*/
+
 }

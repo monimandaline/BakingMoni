@@ -14,7 +14,7 @@
         android:layout_marginTop="?attr/actionBarSize">
 
         <TextView
-            android:id="@+id/tv_chosen_recipe_name"
+            android:id="@+id/tv_recipe_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
@@ -40,7 +40,7 @@
             android:text="@string/steps_title"/>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_step_descriptions"
+            android:id="@+id/rv_steps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="4dp" />

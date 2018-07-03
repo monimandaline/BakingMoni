@@ -1,26 +1,10 @@
 <resources>
     <string name="content_authority">hu.mandaline.bakingapp</string>
-
     <string name="app_name">Baking App</string>
-
     <string name="no_internet_connection">Please, check your internet connection!</string>
-
     <string name="ingredients_title">Ingredients</string>
     <string name="steps_title">Steps</string>
-
-
-
-    <!-- Widget -->
-    <string name="widget_no_selected_recipe">No selected recipe. Press here to select a recipe.</string>
-    <string name="widget_no_selected_recipe_title">No Recipe selected</string>
-
-    <!-- Exo Player Content Description -->
-    <string name="player_previous">Previous</string>
-    <string name="player_rewind">Rewind</string>
-    <string name="player_play">Play</string>
-    <string name="player_pause">Pause</string>
-    <string name="player_fastforward">Fast Forward</string>
-    <string name="player_next">Next</string>
-
-
+    <string name="single_step">Step</string>
+    <string name="widget_select_recipe">Press here to select a recipe.</string>
+    <string name="widget_no_selected_recipe_title">No recipe selected</string>
 </resources>

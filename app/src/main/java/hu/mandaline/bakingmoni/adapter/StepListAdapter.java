@@ -1,5 +1,3 @@
-// For RecyclerView OnClick implementation I used the description of Antonio Leive: https://antonioleiva.com/recyclerview-listener/
-
 package hu.mandaline.bakingmoni.adapter;
 
 import android.content.Context;
@@ -73,8 +71,8 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepAd
         public StepAdapterViewHolder(final View itemView) {
             super(itemView);
 
-            cardView = itemView.findViewById(R.id.cardview_step);
-            stepShortDescription = itemView.findViewById(R.id.tv_step_short_description);
+            cardView = itemView.findViewById(R.id.cv_step);
+            stepShortDescription = itemView.findViewById(R.id.tv_step);
         }
 
         public void bind(final Step_model item, final OnStepListItemClickListener listener) {

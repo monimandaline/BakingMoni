@@ -1,14 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/lin_layout_widget"
+    android:id="@+id/widget_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorPrimaryDark"
-    android:padding="@dimen/widget_margin"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/appwidget_text"
+        android:id="@+id/widget_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -16,18 +15,20 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="4dp"
         android:contentDescription="@string/steps_title"
+        android:gravity="center|center"
         android:text="@string/steps_title"
-        android:textColor="#636262"
+        android:textColor="@color/colorPrimaryLight"
         android:textSize="24sp"
-        android:fontFamily="cursive"
         android:textStyle="bold"/>
 
     <ListView
-        android:id="@+id/listview_widget"
+        android:id="@+id/widget_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:background="@color/colorPrimary"
-        android:contentDescription="@string/steps_title"/>
+        android:layout_margin="4dp"
+        android:textSize="12sp"
+        android:background="@color/colorPrimaryLight"
+        android:textColor="@color/colorPrimaryDark"
+        android:contentDescription="@string/single_step"/>
 
 </LinearLayout>

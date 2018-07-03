@@ -1,22 +1,18 @@
 package hu.mandaline.bakingmoni.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import hu.mandaline.bakingmoni.R;
 import hu.mandaline.bakingmoni.model.Ingredient_model;
 
 // RecyclerView adapter to Ingredients
-
 public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsListAdapter.IngredientsAdapterViewHolder> {
 
 
@@ -36,7 +32,6 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
         return new IngredientsAdapterViewHolder(view);
     }
 
-
     @Override
     public void onBindViewHolder(IngredientsListAdapter.IngredientsAdapterViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
@@ -53,7 +48,7 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
         return ingredientsList.size();
     }
 
-    // Define viewholder
+    // ViewHolder
     public class IngredientsAdapterViewHolder extends RecyclerView.ViewHolder  {
 
         CardView cardView;
@@ -64,20 +59,17 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
         public IngredientsAdapterViewHolder(final View itemView) {
             super(itemView);
 
-            cardView = itemView.findViewById(R.id.cardview_ingredient);
+            cardView = itemView.findViewById(R.id.cv_ingredient);
             tv_ingredient_quantity = itemView.findViewById(R.id.tv_ingredient_quantity);
             tv_ingredient_measure = itemView.findViewById(R.id.tv_ingredient_measure);
-            tv_ingredient_name = itemView.findViewById(R.id.tv_ingredient_name);
-
+            tv_ingredient_name = itemView.findViewById(R.id.tv_ingredient);
         }
-
-
     }
 
-    // Helper method to set the actual ingredients list into the recyclerview on the activity
+ /*   // Helper method to set the actual ingredients list into the recyclerview on the activity
     public void setIngredientsList(ArrayList<Ingredient_model> ingredients) {
         ingredientsList = ingredients;
         notifyDataSetChanged();
-    }
+    }*/
 
 }

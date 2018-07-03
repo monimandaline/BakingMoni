@@ -21,7 +21,7 @@
             android:visibility="gone"/>
 
         <ImageView
-            android:id="@+id/video_imageview"
+            android:id="@+id/iv_step"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:adjustViewBounds="true"
@@ -29,7 +29,7 @@
             android:layout_marginTop="24dp"/>
 
         <TextView
-            android:id="@+id/tv_step_description"
+            android:id="@+id/tv_step"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="4dp"

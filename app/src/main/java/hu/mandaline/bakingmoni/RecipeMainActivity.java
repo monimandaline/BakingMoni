@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -22,8 +21,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import hu.mandaline.bakingmoni.adapter.RecipeAdapter;
-import hu.mandaline.bakingmoni.helper.RecipeData;
-import hu.mandaline.bakingmoni.model.Ingredient_model;
 import hu.mandaline.bakingmoni.model.Recipe_model;
 
 import hu.mandaline.bakingmoni.utils.ApiConnection;
@@ -35,8 +32,6 @@ import retrofit2.Response;
 
 public class RecipeMainActivity extends AppCompatActivity implements RecipeAdapter.OnItemClickListener {
 
-    private static final String TAG = "RecipesActivity";
-
     private ArrayList<Recipe_model> recipeList = new ArrayList<>();
     private RecipeAdapter recipeAdapter;
     private RecyclerView recipeRecyclerView;
@@ -44,16 +39,11 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeAdapt
     private TextView emptyStateTextView;
     private GridLayoutManager layoutManager;
 
-    static final String DETAILS = "details";
-    public Recipe_model RecipeDetails;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_main);
 
-        //Assign the views
         recipeRecyclerView = findViewById(R.id.rv_recipes);
         progressBar = findViewById(R.id.progress_bar);
         emptyStateTextView = findViewById(R.id.tv_empty_state);
@@ -118,15 +108,13 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeAdapt
     }
 
 
-    //Checks if device is connected to the internet or not
+    // Checks if device is connected to the internet or not
     public static boolean isConnectedToInternet(Context context) {
         boolean isConnectedToInternet = false;
 
-        // Get a reference to the ConnectivityManager to check state of network connectivity
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        // Get details on the currently active default data network
-        assert connMgr != null; //line suggested by Lint
+        assert connMgr != null;
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         isConnectedToInternet = networkInfo != null && networkInfo.isConnected();
         return isConnectedToInternet;
@@ -144,22 +132,18 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeAdapt
 
                     ArrayList<Recipe_model> recipes = new ArrayList<>();
                     recipes.addAll(response.body());
-                    Log.d("Utils", "Recipes loaded from API: " + recipes);
 
                     RecipeMainActivity recipeMainActivity = (RecipeMainActivity) activity;
                     recipeMainActivity.setRecipeList(recipes);
                     recipeMainActivity.setProgressBarVisibility(View.GONE);
-
-                } else {
-                    Log.d(TAG, "Status code : " + response.code());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ArrayList<Recipe_model>> call, @NonNull Throwable t) {
                 Toast.makeText(activity, "Error loading data from API: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "Error loading from API" + t.getMessage());
-                RecipeData.success = false;
+             // Log.d(TAG, "Error loading from API" + t.getMessage());
+               //Recipe Data.success = false;
             }
         });
     }

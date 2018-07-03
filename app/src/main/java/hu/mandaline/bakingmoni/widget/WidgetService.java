@@ -7,15 +7,11 @@ import android.widget.RemoteViewsService;
 
 import java.util.ArrayList;
 
-import hu.intellicode.bakingapp.R;
-import hu.intellicode.bakingapp.helper.RecipeData;
-import hu.intellicode.bakingapp.models.Ingredient;
-import hu.intellicode.bakingapp.models.Recipe;
-import hu.mandaline.bakingmoni.model.Recipe_model;
+import hu.mandaline.bakingmoni.R;
+import hu.mandaline.bakingmoni.model.Ingredient_model;
+
 
 public class WidgetService extends RemoteViewsService {
-
-    private int appWidgetId;
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
@@ -25,27 +21,29 @@ public class WidgetService extends RemoteViewsService {
     public class WidgetRemoteViewsFactory implements RemoteViewsFactory {
 
         Context context;
-        Recipe_model recipe = RecipeData.recipe;
-        ArrayList<Ingredient> ingredients;
-        Ingredient ingredient;
+
+        ArrayList<Ingredient_model> WidgetIngredients;
+        Ingredient_model ingredient;
+
 
         WidgetRemoteViewsFactory(Context context) {
             this.context = context;
         }
 
         private void setIngredientsData(){
-            // check if a recipe exists to avoid NullPointerException.
-            Recipe recipe = RecipeData.recipe;
-            if(recipe != null){
-                ingredients = RecipeData.recipe.getIngredients();
+            if(WidgetIngredients != null){
+                WidgetIngredients = WidgetData.widget_ingredients;
             } else{
-                ingredients = new ArrayList<>();
+                WidgetIngredients = new ArrayList<>();
             }
         }
 
         @Override
         public void onCreate() {
-            setIngredientsData();
+
+            // Unwrapping the Parcel, get detail datas
+            WidgetIngredients = WidgetData.widget_ingredients;
+
         }
 
         //load data for the list
@@ -60,17 +58,17 @@ public class WidgetService extends RemoteViewsService {
 
         @Override
         public int getCount() {
-            if(ingredients == null)
+            if(WidgetIngredients == null)
                 return 0;
             else
-                return ingredients.size();
+                return WidgetIngredients.size();
         }
 
         @Override
         public RemoteViews getViewAt(int position) {
-            ingredient = ingredients.get(position);
+            ingredient = WidgetIngredients.get(position);
             RemoteViews remoteView = new RemoteViews(getPackageName(), R.layout.widget_list_item);
-            remoteView.setTextViewText(R.id.widget_qty, String.valueOf(ingredient.getQuantity()));
+            remoteView.setTextViewText(R.id.widget_quantity, String.valueOf(ingredient.getQuantity()));
             remoteView.setTextViewText(R.id.widget_measure, ingredient.getMeasure());
             remoteView.setTextViewText(R.id.widget_ingredient, ingredient.getIngredient());
             return remoteView;
@@ -95,5 +93,8 @@ public class WidgetService extends RemoteViewsService {
         public boolean hasStableIds() {
             return true;
         }
+
+
+
     }
 }

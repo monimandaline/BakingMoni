@@ -20,15 +20,14 @@ import hu.mandaline.bakingmoni.adapter.StepListAdapter;
 import hu.mandaline.bakingmoni.model.Ingredient_model;
 import hu.mandaline.bakingmoni.model.Step_model;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+// A simple {@link Fragment} subclass.
+
 public class IngredientsAndStepsFragment extends Fragment {
 
 
     private ArrayList<Ingredient_model> ingredientList;
     private ArrayList<Step_model> stepList;
-    private OnStepListItemSelected mCallback;
+    private OnStepListItemSelected lCallback;
     private TextView recipeNameView;
     private String recipeName;
     RecyclerView stepsView;
@@ -38,44 +37,37 @@ public class IngredientsAndStepsFragment extends Fragment {
     public IngredientsAndStepsFragment() {
     }
 
-    // The container Activity must implement this interface so the frag can deliver messages
-    public interface OnStepListItemSelected {
-        /**
-         * Called by IngredientsAndStepsFragment when a list item is selected
-         */
-        void onStepListItemSelected(int position);
+   public interface OnStepListItemSelected {
+          void onStepListItemSelected(int position);
     }
 
-    // Override onAttach to make sure that the container activity has implemented the callback
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        // This makes sure that the host activity has implemented the callback interface
-        // If not, it throws an exception
         try {
-            mCallback = (OnStepListItemSelected) context;
+            lCallback = (OnStepListItemSelected) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement OnImageClickListener");
         }
     }
 
-    // Inflates the View of ingredients and steps
+    // Inflates ingredients and steps views
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         final View rootView = inflater.inflate(R.layout.fragment_ingredients_and_steps, container, false);
 
-        recipeNameView = (TextView) rootView.findViewById(R.id.tv_chosen_recipe_name);
-        stepsView = (RecyclerView) rootView.findViewById(R.id.rv_step_descriptions);
+        recipeNameView = (TextView) rootView.findViewById(R.id.tv_recipe_name);
+        stepsView = (RecyclerView) rootView.findViewById(R.id.rv_steps);
         ingredientsView = (RecyclerView) rootView.findViewById(R.id.rv_ingredients);
 
         if (savedInstanceState != null) {
-            ingredientList = savedInstanceState.getParcelableArrayList("INGREDIENTS_SAVED");
-            stepList = savedInstanceState.getParcelableArrayList("STEPS_SAVED");
-            recipeName = savedInstanceState.getString("RECIPE_NAME_SAVED");
+            ingredientList = savedInstanceState.getParcelableArrayList("SIngredient");
+            stepList = savedInstanceState.getParcelableArrayList("SStep");
+            recipeName = savedInstanceState.getString("SName");
 
         } else {
             if (getArguments() != null) {
@@ -88,7 +80,6 @@ public class IngredientsAndStepsFragment extends Fragment {
         String ingredients_title = getResources().getString(R.string.ingredients_title);
         recipeNameView.setText(recipeName + "\u0020" + ingredients_title);
 
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
@@ -98,8 +89,7 @@ public class IngredientsAndStepsFragment extends Fragment {
         StepListAdapter stepAdapter = new StepListAdapter(stepList, new StepListAdapter.OnStepListItemClickListener() {
             @Override
             public void onStepListItemClick(Step_model item) {
-                //Toast.makeText(getContext(), "Item Clicked: " + item.getId(), Toast.LENGTH_LONG).show();
-                mCallback.onStepListItemSelected(item.getId());
+                   lCallback.onStepListItemSelected(item.getId());
             }
         });
 
@@ -112,13 +102,11 @@ public class IngredientsAndStepsFragment extends Fragment {
         return rootView;
     }
 
-    /**
-     * Save the current state of this fragment
-     */
+    // Save the current state of this fragment
     @Override
     public void onSaveInstanceState(Bundle currentState) {
-        currentState.putParcelableArrayList("INGREDIENTS_SAVED", ingredientList);
-        currentState.putParcelableArrayList("STEPS_SAVED", stepList);
-        currentState.putString("RECIPE_NAME_SAVED", recipeName);
+        currentState.putParcelableArrayList("SIngredient", ingredientList);
+        currentState.putParcelableArrayList("SStep", stepList);
+        currentState.putString("SName", recipeName);
     }
 }

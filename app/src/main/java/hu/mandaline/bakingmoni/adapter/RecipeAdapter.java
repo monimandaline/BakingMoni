@@ -13,7 +13,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import hu.mandaline.bakingmoni.R;
 import hu.mandaline.bakingmoni.model.Recipe_model;
@@ -92,7 +91,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
         public RecipeAdapterViewHolder(final View itemView) {
             super(itemView);
 
-            cardView = itemView.findViewById(R.id.cardview_recipe);
+            cardView = itemView.findViewById(R.id.cv_recipe);
             recipeImageView = itemView.findViewById(R.id.iv_recipe_image);
             recipeName = itemView.findViewById(R.id.tv_recipe_name);
 

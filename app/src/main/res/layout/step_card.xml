@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardview_step"
+        android:id="@+id/cv_step"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
@@ -19,7 +19,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tv_step_short_description"
+                android:id="@+id/tv_step"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="4dp"
@@ -32,13 +32,10 @@
                 android:id="@+id/iv_overflow"
                 style="@style/styleOpenItem"
                 android:layout_alignParentRight="true"
-                android:layout_alignEnd="@id/tv_step_short_description"
+                android:layout_alignEnd="@id/tv_step"
                 android:src="@drawable/ic_open_item"
                 android:contentDescription="item"/>
-
         </RelativeLayout>
-
-
 
     </android.support.v7.widget.CardView>
 
